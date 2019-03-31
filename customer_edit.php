@@ -1,43 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<h3>Update Contact</h3>
-	<form action="customer_update.php" method="POST">
-	<?php
+<?php 
+	require "header.php";
+ ?>
+ <!DOCTYPE html>
+ <html>
+ <head>
+ 	<title></title>
+ 	<style>
+		body {
+		  background-color: #ECF0F1;
+		}
+	</style>
+ </head>
+ <body>
+ 	<br>
+ 	<div class="container">
+ 	<h3>Update Customer</h3>
+ 	<hr>
+ 	<form action="includes/customer_update.inc.php" method="POST">
+ 		<?php 
+ 			include "includes/dbh.inc.php";
+
+ 			$id = $_GET['id'];
 	
-	include "connect.php";
-	
-	$id = $_GET['id'];
-	
-	$sql = "SELECT customer_lastname, customer_firstname, customer_middlename, customer_ext, address, contact_number FROM customer WHERE customer_id = $id";
-	$res = mysqli_query($link, $sql);
-	$row = mysqli_fetch_array($res);
-	
-	$customer_lastname = $row['customer_lastname'];
-	$customer_firstname = $row['customer_firstname'];
-	$customer_middlename = $row['customer_middlename'];
-	$customer_ext = $row['customer_ext'];
-	$address = $row['address'];
-	$contact_number = $row['contact_number'];
-	
-	echo '<h4>Last Name: ';
-	echo '<input type="text" name="customer_lastname" value="'.$customer_lastname.'" required></h4>';
-	echo '<h4>First Name: ';
-	echo '<input type="text" name="customer_firstname" value="'.$customer_firstname.'" required></h4>';
-	echo '<h4>Middle Name: ';
-	echo '<input type="text" name="customer_middlename" value="'.$customer_middlename.'"></h4>';
-	echo '<h4>Name Extension: ';
-	echo '<input type="text" name="customer_ext" value="'.$customer_ext.'"></h4>';
-	echo '<h4>Address: ';
-	echo '<input type="text" name="address" value="'.$address.'" required></h4>';
-	echo '<h4>Contact Number: ';
-	echo '<input type="text" name="contact_number" value="'.$contact_number.'"></h4>';
-	echo '<input type="hidden" name="id" value="'. $id .'">';
-	?>
-	<button type="submit">Update</button>
-	</form>
-</body>
-</html>
+		$sql = "SELECT c_lastname, c_firstname, c_mi, c_ext, c_address, c_phone FROM customer WHERE c_id = $id";
+		$res = mysqli_query($conn, $sql);
+		$row = mysqli_fetch_array($res);
+		
+		$c_lastname = $row['c_lastname'];
+		$c_firstname = $row['c_firstname'];
+		$c_mi = $row['c_mi'];
+		$c_ext = $row['c_ext'];
+		$c_address = $row['c_address'];
+		$c_phone = $row['c_phone'];
+		
+		echo '<h4>Last Name: ';
+		echo '<input type="text" name="c_lastname" value="'.$c_lastname.'" required></h4>';
+		echo '<h4>First Name: ';
+		echo '<input type="text" name="c_firstname" value="'.$c_firstname.'" required></h4>';
+		echo '<h4>Middle Name: ';
+		echo '<input type="text" name="c_mi" value="'.$c_mi.'"></h4>';
+		echo '<h4>Name Extension: ';
+		echo '<input type="text" name="c_ext" value="'.$c_ext.'"></h4>';
+		echo '<h4>Address: ';
+		echo '<input type="text" name="c_address" value="'.$c_address.'"></h4>';
+		echo '<h4>Contact Number: ';
+		echo '<input type="text" name="c_phone" value="'.$c_phone.'"></h4>';
+		echo '<input type="hidden" name="id" value="'. $id .'">';
+ 		 ?>
+ 		<button type="submit">Update</button>
+ 	</form>
+ 	</div>
+ </body>
+ </html>
+ <?php 
+	require "footer.php";
+ ?>
