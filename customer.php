@@ -1,12 +1,23 @@
+<?php 
+	require "header.php"
+?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+	<style>
+		body {
+		  background-color: #ECF0F1;
+		}
+	</style>
 </head>
 <body>
-	<form action="customer_create.html">
+	<br>
+	<div class="container">
+	<form action="customer_create.php">
 		<button type="submit">Add New Customer</button>
 	</form>
+	<hr>
 	<table>
 		<tr>
 			<th>Customer ID</th>
@@ -22,25 +33,33 @@
 		
 		<?php
 		
-		include "connect.php";
-		$sql = "SELECT * FROM customer";
-		$res = mysqli_query($link, $sql);
+		include "includes/dbh.inc.php";
+		$adminId = $_SESSION['adminId'];
+		$sql = "SELECT c_id, c_lastname, c_firstname, c_mi, c_ext, c_address, c_phone FROM customer JOIN admin WHERE admin.idAdmin = $adminId AND customer.idAdmin = $adminId ORDER BY c_lastname ASC";
+		$res = mysqli_query($conn, $sql);
 		while ($line = mysqli_fetch_array($res)) {
-			$id = $line['customer_id'];
+			$id = $line['c_id'];
 			echo "<tr>";
 			echo "<td>" .$id. "</td>";
-			echo "<td>" .$line['customer_lastname']. "</td>";
-			echo "<td>" .$line['customer_firstname']. "</td>";
-			echo "<td>" .$line['customer_middlename']. "</td>";
-			echo "<td>" .$line['customer_ext']. "</td>";
-			echo "<td>" .$line['address']. "</td>";
-			echo "<td>" .$line['contact_number']. "</td>";
+			echo "<td>" .$line['c_lastname']. "</td>";
+			echo "<td>" .$line['c_firstname']. "</td>";
+			echo "<td>" .$line['c_mi']. "</td>";
+			echo "<td>" .$line['c_ext']. "</td>";
+			echo "<td>" .$line['c_address']. "</td>";
+			echo "<td>" .$line['c_phone']. "</td>";
 			echo '<td><a href="customer_edit.php?id=' .$id. '">Edit</a></td>';
-			echo '<td><a href="customer_delete.php?id=' .$id. '">Delete</a></td>';
+			echo '<td><a href="includes/customer_delete.inc.php?id=' .$id. '">Delete</a></td>';
+			echo '<div>';
+                echo '<input type="hidden" name="adminId" value="'. $adminId .'" >';
+        	echo '</div>';
 			echo "</tr>";
 		}
-		mysqli_close($link);
+		mysqli_close($conn);
 		?>
 	</table>
+	</div>
 </body>
 </html>
+<?php 
+	require "footer.php";
+ ?>

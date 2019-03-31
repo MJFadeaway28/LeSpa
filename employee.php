@@ -1,46 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<form action="employee_create.html">
+<?php 
+	require "header.php";
+?>
+<style>
+	body {
+		 background-color: #ECF0F1;
+	}
+</style>
+<main>
+<br>
+<div class="container">
+	<form action="employee_create.php">
 		<button type="submit">Add New Employee</button>
 	</form>
+	<hr>
 	<table>
 		<tr>
 			<th>Employee ID</th>
 			<th>Last Name</th>
 			<th>First Name</th>
-			<th>Middle Name</th>
-			<th>Extension</th>
-			<th>Address</th>
-			<th>Contact Number</th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
 		
 		<?php
 		
-		include "connect.php";
-		$sql = "SELECT * FROM employee";
-		$res = mysqli_query($link, $sql);
+		include "includes/dbh.inc.php";
+		$adminId = $_SESSION['adminId'];
+		$sql = "SELECT e_id, e_lastname, e_firstname FROM employees JOIN admin WHERE admin.idAdmin = $adminId AND employees.idAdmin = $adminId";
+		$res = mysqli_query($conn, $sql);
 		while ($line = mysqli_fetch_array($res)) {
-			$id = $line['employee_id'];
+			$id = $line['e_id'];
 			echo "<tr>";
 			echo "<td>" .$id. "</td>";
-			echo "<td>" .$line['employee_lastname']. "</td>";
-			echo "<td>" .$line['employee_firstname']. "</td>";
-			echo "<td>" .$line['employee_middlename']. "</td>";
-			echo "<td>" .$line['employee_ext']. "</td>";
-			echo "<td>" .$line['employee_address']. "</td>";
-			echo "<td>" .$line['employee_number']. "</td>";
+			echo "<td>" .$line['e_lastname']. "</td>";
+			echo "<td>" .$line['e_firstname']. "</td>";
 			echo '<td><a href="employee_edit.php?id=' .$id. '">Edit</a></td>';
-			echo '<td><a href="employee_delete.php?id=' .$id. '">Delete</a></td>';
+			echo '<td><a href="includes/employee_delete.inc.php?id=' .$id. '">Delete</a></td>';
+			echo '<div>';
+                echo '<input type="hidden" name="adminId" value="'. $adminId .'" >';
+        	echo '</div>';
 			echo "</tr>";
 		}
-		mysqli_close($link);
+		mysqli_close($conn);
 		?>
 	</table>
-</body>
-</html>
+</div>
+</main>
+ <?php 
+	require "footer.php";
+ ?>

@@ -1,42 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<form action="services_create.html">
+<?php 
+	require "header.php";
+?>
+<style>
+	body {
+		 background-color: #ECF0F1;
+	}
+</style>
+<main>
+<br>
+<div class="container">
+	<form action="services_create.php">
 		<button type="submit">Add New Service</button>
 	</form>
+	<hr>
 	<table>
 		<tr>
-			<th>Service Code</th>
-			<th>Description</th>
-			<th>Price</th>
-			<th>Duration</th>
-			<th>Commission</th>
+			<th><center>Service Code</center></th>
+			<th><center>Description</center></th>
+			<th><center>Price</center></th>
+			<th><center>Duration (minutes)</center></th>
+			<th><center>Commission</center></th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
 		
 		<?php
 		
-		include "connect.php";
-		$sql = "SELECT * FROM services";
-		$res = mysqli_query($link, $sql);
+		include "includes/dbh.inc.php";
+		$adminId = $_SESSION['adminId'];
+		$sql = "SELECT s_id, s_code, description, price, duration, commission FROM services JOIN admin WHERE admin.idAdmin = $adminId AND services.idAdmin = $adminId";
+		$res = mysqli_query($conn, $sql);
 		while ($line = mysqli_fetch_array($res)) {
-			$id = $line['service_id'];
+			$id = $line['s_id'];
 			echo "<tr>";
-			echo "<td>" .$line['service_code']. "</td>";
-			echo "<td>" .$line['description']. "</td>";
-			echo "<td>" .$line['price']. "</td>";
-			echo "<td>" .$line['duration']. "</td>";
-			echo "<td>" .$line['commission']. "</td>";
+			echo "<td><center>" .$line['s_code']. "</center></td>";
+			echo "<td><center>" .$line['description']. "</center></td>";
+			echo "<td><center>" .$line['price']. "</center></td>";
+			echo "<td><center>" .$line['duration']. "</center></td>";
+			echo "<td><center>" .$line['commission']. "</center></td>";
 			echo '<td><a href="services_edit.php?id=' .$id. '">Edit</a></td>';
-			echo '<td><a href="services_delete.php?id=' .$id. '">Delete</a></td>';
+			echo '<td><a href="includes/services_delete.inc.php?id=' .$id. '">Delete</a></td>';
+			echo '<div>';
+                echo '<input type="hidden" name="adminId" value="'. $adminId .'" >';
+        	echo '</div>';
 			echo "</tr>";
 		}
-		mysqli_close($link);
+		mysqli_close($conn);
 		?>
 	</table>
-</body>
-</html>
+</div>
+</main>
+  <?php 
+	require "footer.php";
+ ?>
