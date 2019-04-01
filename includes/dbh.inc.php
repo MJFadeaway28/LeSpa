@@ -1,12 +1,11 @@
-<?php
+<?php 
+	$servername = "localhost";
+	$dbUsername = "root";
+	$dbPassword = "";
+	$dbName = "le_spa";
 
-$servername = "localhost";
-$dBUsername = "root";
-$dBPassword = "";
-$dBName = "phonebook";
+	$conn = mysqli_connect($servername, $dbUsername, $dbPassword, $dbName);
 
-$conn = mysqli_connect($servername, $dBUsername, $dBPassword, $dBName);
-
-if (!$conn) {
-	die("Connection failed: ".mysqli_connect_error());
-}
+	if (!$conn) {
+		die("Connection failed: ".mysqli_connect_error());
+	} 
