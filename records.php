@@ -9,16 +9,17 @@
 <main>
 	<br>
 	<div class="container">
-		<form action="c_record_create.php">
-			<button type="submit">Add New Customer Record</button>
-		</form>
+		<h4><b>Customer Records</b></h4>
 		<hr>
 		<table>
 			<tr>
 				<th><center>Transaction ID</center></th>
 				<th><center>Customer Name</center></th>
 				<th><center>Date</center></th>
-				<th><center>Actions</center></th>
+				<th><center>Add</center></th>
+				<th><center>View</center></th>
+				<th><center>Edit</center></th>
+				<th><center>Delete</center></th>
 			</tr>
 
 			<?php 
@@ -33,13 +34,14 @@
 				echo "<td>" .$id. "</td>";
 				echo "<td>" .$line['c_lastname'].", " .$line['c_firstname'] . " ".$line['c_mi']." " .$line['c_ext']. "</td>";
 				echo "<td>" .$line['t_date']. "</td>";
-				echo "<td>Add";
-				echo "View";
-				echo "Edit";
-				echo "Delete<td>";
+				echo '<td><a href="s_record_create.php?id=' .$id. '">Add</a></td>';
+				echo '<td><a href="t_record.php?id=' .$id. '">View</a></td>';
+				echo '<td><a href="records_edit.php?id=' .$id. '">Edit</a></td>';
+				echo '<td><a href="includes/c_record_delete.php?id=' .$id. '">Delete</a></td>';
 				echo '<div>';
                 echo '<input type="hidden" name="adminId" value="'. $adminId .'" >';
 	        	echo '</div>';
+
 				echo "</tr>";
 			}
 			mysqli_close($conn);

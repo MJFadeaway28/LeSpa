@@ -118,6 +118,35 @@
 		.topnav input[type=password] {
 		    border: 1px solid #ccc;  
 		}
+		      	}
+      	#box1{
+          margin-top: 5%;
+      	}
+      	#title1{
+          text-align: center;
+      	}
+	    #bt {
+	        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	        border-collapse: collapse;
+	        width: 100%;
+	    }
+
+	    #bt td, #bt th {
+	        border: 1px solid #ddd;
+	        padding: 8px;
+	    }
+
+	    #bt tr{background-color: white;}
+
+	    #bt tr:hover {background-color: #ddd;}
+
+	    #bt th {
+	        padding-top: 12px;
+	        padding-bottom: 12px;
+	        text-align: center;
+	        background-color: #DC0F0F;
+	        color: white;
+	    }
 	</style>
 </head>
 <body>
